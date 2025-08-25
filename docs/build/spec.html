@@ -1,0 +1,2397 @@
+<!doctype html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  lang=""
+  xml:lang=""
+  >
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+        <meta name="author" content="waagle, Kompact.io" />
+           <title>Atrium Pages : Spec</title>
+    <style>
+      html {
+        color: #1a1a1a;
+        background-color: #fdfdfd;
+      }
+      body {
+        margin: 0 auto;
+        max-width: 36em;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        hyphens: auto;
+        overflow-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        font-kerning: normal;
+      }
+      @media (max-width: 600px) {
+        body {
+          font-size: 0.9em;
+          padding: 12px;
+        }
+        h1 {
+          font-size: 1.8em;
+        }
+      }
+      @media print {
+        html {
+          background-color: white;
+        }
+        body {
+          background-color: transparent;
+          color: black;
+          font-size: 12pt;
+        }
+        p, h2, h3 {
+          orphans: 3;
+          widows: 3;
+        }
+        h2, h3, h4 {
+          page-break-after: avoid;
+        }
+      }
+      p {
+        margin: 1em 0;
+      }
+      a {
+        color: #1a1a1a;
+      }
+      a:visited {
+        color: #1a1a1a;
+      }
+      img {
+        max-width: 100%;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        margin-top: 1.4em;
+      }
+      h5, h6 {
+        font-size: 1em;
+        font-style: italic;
+      }
+      h6 {
+        font-weight: normal;
+      }
+      ol, ul {
+        padding-left: 1.7em;
+        margin-top: 1em;
+      }
+      li > ol, li > ul {
+        margin-top: 0;
+      }
+      blockquote {
+        margin: 1em 0 1em 1.7em;
+        padding-left: 1em;
+        border-left: 2px solid #e6e6e6;
+        color: #606060;
+      }
+      code {
+        font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+        font-size: 85%;
+        margin: 0;
+        hyphens: manual;
+      }
+      pre {
+        margin: 1em 0;
+        overflow: auto;
+      }
+      pre code {
+        padding: 0;
+        overflow: visible;
+        overflow-wrap: normal;
+      }
+      .sourceCode {
+       background-color: transparent;
+       overflow: visible;
+      }
+      hr {
+        background-color: #1a1a1a;
+        border: none;
+        height: 1px;
+        margin: 1em 0;
+      }
+      table {
+        margin: 1em 0;
+        border-collapse: collapse;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+        font-variant-numeric: lining-nums tabular-nums;
+      }
+      table caption {
+        margin-bottom: 0.75em;
+      }
+      tbody {
+        margin-top: 0.5em;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+      }
+      th {
+        border-top: 1px solid #1a1a1a;
+        padding: 0.25em 0.5em 0.25em 0.5em;
+      }
+      td {
+        padding: 0.125em 0.5em 0.25em 0.5em;
+      }
+      header {
+        margin-bottom: 4em;
+        text-align: center;
+      }
+      #TOC li {
+        list-style: none;
+      }
+      #TOC ul {
+        padding-left: 1.3em;
+      }
+      #TOC > ul {
+        padding-left: 0;
+      }
+      #TOC a:not(:hover) {
+        text-decoration: none;
+      }
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      /* The extra [class] is a hack that increases specificity enough to
+         override a similar rule in reveal.js */
+      ul.task-list[class]{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        font-size: inherit;
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1.6em;
+        vertical-align: middle;
+      }
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    </style>
+      <style>
+  @charset "UTF-8";
+
+  /* Import ET Book styles
+   adapted from https://github.com/edwardtufte/et-book/blob/gh-pages/et-book.css */
+
+  @font-face {
+    font-family: "et-book";
+    src: url("et-book/et-book-roman-line-figures/et-book-roman-line-figures.eot");
+    src:
+      url("et-book/et-book-roman-line-figures/et-book-roman-line-figures.eot?#iefix")
+        format("embedded-opentype"),
+      url("et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff")
+        format("woff"),
+      url("et-book/et-book-roman-line-figures/et-book-roman-line-figures.ttf")
+        format("truetype"),
+      url("et-book/et-book-roman-line-figures/et-book-roman-line-figures.svg#etbookromanosf")
+        format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "et-book";
+    src: url("et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot");
+    src:
+      url("et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.eot?#iefix")
+        format("embedded-opentype"),
+      url("et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff")
+        format("woff"),
+      url("et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.ttf")
+        format("truetype"),
+      url("et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.svg#etbookromanosf")
+        format("svg");
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "et-book";
+    src: url("et-book/et-book-bold-line-figures/et-book-bold-line-figures.eot");
+    src:
+      url("et-book/et-book-bold-line-figures/et-book-bold-line-figures.eot?#iefix")
+        format("embedded-opentype"),
+      url("et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff")
+        format("woff"),
+      url("et-book/et-book-bold-line-figures/et-book-bold-line-figures.ttf")
+        format("truetype"),
+      url("et-book/et-book-bold-line-figures/et-book-bold-line-figures.svg#etbookromanosf")
+        format("svg");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "et-book-roman-old-style";
+    src: url("et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot");
+    src:
+      url("et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.eot?#iefix")
+        format("embedded-opentype"),
+      url("et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.woff")
+        format("woff"),
+      url("et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.ttf")
+        format("truetype"),
+      url("et-book/et-book-roman-old-style-figures/et-book-roman-old-style-figures.svg#etbookromanosf")
+        format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* Tufte CSS styles */
+  body {
+    min-width: 100vw;
+    min-height: 100vh;
+    font-size: 15px;
+    font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD",
+      "Book Antiqua", Georgia, serif;
+    background-color: #fffff8;
+    color: #111;
+    margin: 0;
+    padding: 1rem 0;
+  }
+
+  main {
+    padding-top: 5rem;
+    margin: 0 auto;
+    max-width: 760px;
+    counter-reset: sidenote-counter;
+  }
+
+  /* Adds dark mode */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #151515;
+      color: #ddd;
+    }
+  }
+
+  h1 {
+    font-weight: 400;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 3.2rem;
+    line-height: 1;
+  }
+
+  h2 {
+    font-style: italic;
+    font-weight: 400;
+    margin-top: 2.1rem;
+    margin-bottom: 1.4rem;
+    font-size: 2.2rem;
+    line-height: 1;
+  }
+
+  h3 {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.7rem;
+    margin-top: 2rem;
+    margin-bottom: 1.4rem;
+    line-height: 1;
+  }
+
+  hr {
+    display: block;
+    height: 1px;
+    width: 55%;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+  }
+
+  p.subtitle {
+    font-style: italic;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    display: block;
+    line-height: 1;
+  }
+
+  .numeral {
+    font-family: et-book-roman-old-style;
+  }
+
+  .danger {
+    color: red;
+  }
+
+  article {
+    padding: 5rem 0rem;
+  }
+
+  section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  p,
+  dl,
+  ol,
+  ul {
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
+
+  p {
+    margin-top: 1.4rem;
+    margin-bottom: 1.4rem;
+    padding-right: 0;
+    vertical-align: baseline;
+  }
+
+  /* Chapter Epigraphs */
+  div.epigraph {
+    margin: 5em 0;
+  }
+
+  div.epigraph > blockquote {
+    margin-top: 3em;
+    margin-bottom: 3em;
+  }
+
+  div.epigraph > blockquote,
+  div.epigraph > blockquote > p {
+    font-style: italic;
+  }
+
+  div.epigraph > blockquote > footer {
+    font-style: normal;
+  }
+
+  div.epigraph > blockquote > footer > cite {
+    font-style: italic;
+  }
+  /* end chapter epigraphs styles */
+
+  blockquote {
+    font-size: 1.4rem;
+  }
+
+  blockquote p {
+    width: 55%;
+    margin-right: 40px;
+  }
+
+  blockquote footer {
+    width: 55%;
+    font-size: 1.1rem;
+    text-align: right;
+  }
+
+  section > p,
+  section > footer,
+  section > table {
+    width: 55%;
+  }
+
+  /* 50 + 5 == 55, to be the same width as paragraph */
+  section > dl,
+  section > ol,
+  section > ul {
+    width: 50%;
+    -webkit-padding-start: 5%;
+  }
+
+  dt:not(:first-child),
+  li:not(:first-child) {
+    margin-top: 0.25rem;
+  }
+
+  figure {
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    max-width: 55%;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    margin: 0 0 3em 0;
+  }
+
+  figcaption {
+    float: right;
+    clear: right;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    vertical-align: baseline;
+    position: relative;
+    max-width: 40%;
+  }
+
+  figure.fullwidth figcaption {
+    margin-right: 24%;
+  }
+
+  /* Links: replicate underline that clears descenders */
+  a:link,
+  a:visited {
+    color: inherit;
+  }
+
+  .no-tufte-underline:link {
+    background: unset;
+    text-shadow: unset;
+  }
+
+  a:link,
+  .tufte-underline,
+  .hover-tufte-underline:hover {
+    text-decoration: none;
+    background:
+      -webkit-linear-gradient(#fffff8, #fffff8),
+      -webkit-linear-gradient(#fffff8, #fffff8),
+      -webkit-linear-gradient(currentColor, currentColor);
+    background: linear-gradient(#fffff8, #fffff8),
+      linear-gradient(#fffff8, #fffff8),
+      linear-gradient(currentColor, currentColor);
+    -webkit-background-size:
+      0.05em 1px,
+      0.05em 1px,
+      1px 1px;
+    -moz-background-size:
+      0.05em 1px,
+      0.05em 1px,
+      1px 1px;
+    background-size:
+      0.05em 1px,
+      0.05em 1px,
+      1px 1px;
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    text-shadow:
+      0.03em 0 #fffff8,
+      -0.03em 0 #fffff8,
+      0 0.03em #fffff8,
+      0 -0.03em #fffff8,
+      0.06em 0 #fffff8,
+      -0.06em 0 #fffff8,
+      0.09em 0 #fffff8,
+      -0.09em 0 #fffff8,
+      0.12em 0 #fffff8,
+      -0.12em 0 #fffff8,
+      0.15em 0 #fffff8,
+      -0.15em 0 #fffff8;
+    background-position:
+      0% 93%,
+      100% 93%,
+      0% 93%;
+  }
+
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    a:link,
+    .tufte-underline,
+    .hover-tufte-underline:hover {
+      background-position-y: 87%, 87%, 87%;
+    }
+  }
+
+  /* Adds dark mode */
+  @media (prefers-color-scheme: dark) {
+    a:link,
+    .tufte-underline,
+    .hover-tufte-underline:hover {
+      text-shadow:
+        0.03em 0 #151515,
+        -0.03em 0 #151515,
+        0 0.03em #151515,
+        0 -0.03em #151515,
+        0.06em 0 #151515,
+        -0.06em 0 #151515,
+        0.09em 0 #151515,
+        -0.09em 0 #151515,
+        0.12em 0 #151515,
+        -0.12em 0 #151515,
+        0.15em 0 #151515,
+        -0.15em 0 #151515;
+    }
+  }
+
+  a:link::selection,
+  a:link::-moz-selection {
+    text-shadow:
+      0.03em 0 #b4d5fe,
+      -0.03em 0 #b4d5fe,
+      0 0.03em #b4d5fe,
+      0 -0.03em #b4d5fe,
+      0.06em 0 #b4d5fe,
+      -0.06em 0 #b4d5fe,
+      0.09em 0 #b4d5fe,
+      -0.09em 0 #b4d5fe,
+      0.12em 0 #b4d5fe,
+      -0.12em 0 #b4d5fe,
+      0.15em 0 #b4d5fe,
+      -0.15em 0 #b4d5fe;
+    background: #b4d5fe;
+  }
+
+  /* Sidenotes, margin notes, figures, captions */
+  img {
+    max-width: 100%;
+  }
+
+  .sidenote,
+  .marginnote {
+    float: right;
+    clear: right;
+    margin-right: -60%;
+    width: 50%;
+    margin-top: 0.3rem;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    vertical-align: baseline;
+    position: relative;
+  }
+
+  .sidenote-number {
+    counter-increment: sidenote-counter;
+  }
+
+  .sidenote-number:after,
+  .sidenote:before {
+    font-family: et-book-roman-old-style;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  .sidenote-number:after {
+    content: counter(sidenote-counter);
+    font-size: 1rem;
+    top: -0.5rem;
+    left: 0.1rem;
+  }
+
+  .sidenote:before {
+    content: counter(sidenote-counter) " ";
+    font-size: 1rem;
+    top: -0.5rem;
+  }
+
+  blockquote .sidenote,
+  blockquote .marginnote {
+    margin-right: -82%;
+    min-width: 59%;
+    text-align: left;
+  }
+
+  div.fullwidth,
+  table.fullwidth {
+    width: 100%;
+  }
+
+  div.table-wrapper {
+    overflow-x: auto;
+    font-family: "Trebuchet MS", "Gill Sans", "Gill Sans MT", sans-serif;
+  }
+
+  .sans {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+    letter-spacing: 0.03em;
+  }
+
+  code,
+  pre > code {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 1rem;
+    line-height: 1.42;
+    -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS. See https://github.com/edwardtufte/tufte-css/issues/81#issuecomment-261953409 */
+  }
+
+  .sans > code {
+    font-size: 1.2rem;
+  }
+
+  h1 > code,
+  h2 > code,
+  h3 > code {
+    font-size: 0.8em;
+  }
+
+  .marginnote > code,
+  .sidenote > code {
+    font-size: 1rem;
+  }
+
+  pre > code {
+    font-size: 0.9rem;
+    width: 52.5%;
+    margin-left: 2.5%;
+    overflow-x: auto;
+    display: block;
+  }
+
+  pre.fullwidth > code {
+    width: 90%;
+  }
+
+  .fullwidth {
+    max-width: 90%;
+    clear: both;
+  }
+
+  span.newthought {
+    font-variant: small-caps;
+    font-size: 1.2em;
+  }
+
+  input.margin-toggle {
+    display: none;
+  }
+
+  label.sidenote-number {
+    display: inline-block;
+    max-height: 2rem; /* should be less than or equal to paragraph line-height */
+  }
+
+  label.margin-toggle:not(.sidenote-number) {
+    display: none;
+  }
+
+  .iframe-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+  }
+
+  .iframe-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 760px) {
+    main {
+      width: 80%;
+      padding-left: 4%;
+      padding-right: 4%;
+    }
+
+    hr,
+    section > p,
+    section > footer,
+    section > table {
+      width: 100%;
+    }
+
+    pre > code {
+      width: 97%;
+    }
+
+    section > dl,
+    section > ol,
+    section > ul {
+      width: 90%;
+    }
+
+    figure {
+      max-width: 90%;
+    }
+
+    figcaption,
+    figure.fullwidth figcaption {
+      margin-right: 0%;
+      max-width: none;
+    }
+
+    blockquote {
+      margin-left: 1.5em;
+      margin-right: 0em;
+    }
+
+    blockquote p,
+    blockquote footer {
+      width: 100%;
+    }
+
+    label.margin-toggle:not(.sidenote-number) {
+      display: inline;
+    }
+
+    .sidenote,
+    .marginnote {
+      display: none;
+    }
+
+    .margin-toggle:checked + .sidenote,
+    .margin-toggle:checked + .marginnote {
+      display: block;
+      float: left;
+      left: 1rem;
+      clear: both;
+      width: 95%;
+      margin: 1rem 2.5%;
+      vertical-align: baseline;
+      position: relative;
+    }
+
+    label {
+      cursor: pointer;
+    }
+
+    div.table-wrapper,
+    table {
+      width: 85%;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+</style>  <style>
+  .mermaid {
+    text-align: center;
+  }
+</style>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "light",
+    themeVariables: {
+      primaryColor: "#BB2528",
+      primaryTextColor: "#fff",
+      primaryBorderColor: "#7C0000",
+      lineColor: "#eee",
+      secondaryColor: "#006100",
+      tertiaryColor: "#fff",
+    },
+  });
+</script>  <style>
+  .fa {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: #eee;
+    radius: 0.2rem;
+    padding: 0.1rem;
+    background-size: fit;
+    background-repeat: no-repeat;
+  }
+
+  .fa-address-book {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48IS0tISBGb250IEF3ZXNvbWUgRnJlZSA2LjQuMiBieSBAZm9udGF3ZXNvbWUgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbSBMaWNlbnNlIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20vbGljZW5zZS9mcmVlIChJY29uczogQ0MgQlkgNC4wLCBGb250czogU0lMIE9GTCAxLjEsIENvZGU6IE1JVCBMaWNlbnNlKSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4gLS0+PHBhdGggZD0iTTk2IDBDNjAuNyAwIDMyIDI4LjcgMzIgNjRWNDQ4YzAgMzUuMyAyOC43IDY0IDY0IDY0SDM4NGMzNS4zIDAgNjQtMjguNyA2NC02NFY2NGMwLTM1LjMtMjguNy02NC02NC02NEg5NnpNMjA4IDI4OGg2NGM0NC4yIDAgODAgMzUuOCA4MCA4MGMwIDguOC03LjIgMTYtMTYgMTZIMTQ0Yy04LjggMC0xNi03LjItMTYtMTZjMC00NC4yIDM1LjgtODAgODAtODB6bS0zMi05NmE2NCA2NCAwIDEgMSAxMjggMCA2NCA2NCAwIDEgMSAtMTI4IDB6TTUxMiA4MGMwLTguOC03LjItMTYtMTYtMTZzLTE2IDcuMi0xNiAxNnY2NGMwIDguOCA3LjIgMTYgMTYgMTZzMTYtNy4yIDE2LTE2Vjgwek00OTYgMTkyYy04LjggMC0xNiA3LjItMTYgMTZ2NjRjMCA4LjggNy4yIDE2IDE2IDE2czE2LTcuMiAxNi0xNlYyMDhjMC04LjgtNy4yLTE2LTE2LTE2em0xNiAxNDRjMC04LjgtNy4yLTE2LTE2LTE2cy0xNiA3LjItMTYgMTZ2NjRjMCA4LjggNy4yIDE2IDE2IDE2czE2LTcuMiAxNi0xNlYzMzZ6Ii8+PC9zdmc+");
+  }
+
+  .fa-circle {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48IS0tISBGb250IEF3ZXNvbWUgRnJlZSA2LjQuMiBieSBAZm9udGF3ZXNvbWUgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbSBMaWNlbnNlIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20vbGljZW5zZS9mcmVlIChJY29uczogQ0MgQlkgNC4wLCBGb250czogU0lMIE9GTCAxLjEsIENvZGU6IE1JVCBMaWNlbnNlKSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4gLS0+PHBhdGggZD0iTTI1NiA1MTJBMjU2IDI1NiAwIDEgMCAyNTYgMGEyNTYgMjU2IDAgMSAwIDAgNTEyeiIvPjwvc3ZnPg==");
+  }
+
+  .fa-database {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tISBGb250IEF3ZXNvbWUgRnJlZSA2LjQuMiBieSBAZm9udGF3ZXNvbWUgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbSBMaWNlbnNlIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20vbGljZW5zZS9mcmVlIChJY29uczogQ0MgQlkgNC4wLCBGb250czogU0lMIE9GTCAxLjEsIENvZGU6IE1JVCBMaWNlbnNlKSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4gLS0+PHBhdGggZD0iTTQ0OCA4MHY0OGMwIDQ0LjItMTAwLjMgODAtMjI0IDgwUzAgMTcyLjIgMCAxMjhWODBDMCAzNS44IDEwMC4zIDAgMjI0IDBTNDQ4IDM1LjggNDQ4IDgwek0zOTMuMiAyMTQuN2MyMC44LTcuNCAzOS45LTE2LjkgNTQuOC0yOC42VjI4OGMwIDQ0LjItMTAwLjMgODAtMjI0IDgwUzAgMzMyLjIgMCAyODhWMTg2LjFjMTQuOSAxMS44IDM0IDIxLjIgNTQuOCAyOC42Qzk5LjcgMjMwLjcgMTU5LjUgMjQwIDIyNCAyNDBzMTI0LjMtOS4zIDE2OS4yLTI1LjN6TTAgMzQ2LjFjMTQuOSAxMS44IDM0IDIxLjIgNTQuOCAyOC42Qzk5LjcgMzkwLjcgMTU5LjUgNDAwIDIyNCA0MDBzMTI0LjMtOS4zIDE2OS4yLTI1LjNjMjAuOC03LjQgMzkuOS0xNi45IDU0LjgtMjguNlY0MzJjMCA0NC4yLTEwMC4zIDgwLTIyNCA4MFMwIDQ3Ni4yIDAgNDMyVjM0Ni4xeiIvPjwvc3ZnPg==");
+  }
+</style>  <style>
+  /**
+ * Solarized dark atom theme for `prism.js`
+ * Based on Atom's `atom-dark` theme: https://github.com/atom/atom-dark-syntax
+ * @author Pranay Chauhan (@PranayChauhan2516)
+ */
+
+  code[class*="language-"],
+  pre[class*="language-"] {
+    color: #839496;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+    font-family: Inconsolata, Monaco, Consolas, "Courier New", Courier,
+      monospace;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  /* Code blocks */
+  pre[class*="language-"] {
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+    border-radius: 0.3em;
+  }
+
+  :not(pre) > code[class*="language-"],
+  pre[class*="language-"] {
+    background: #002b36;
+  }
+
+  /* Inline code */
+  :not(pre) > code[class*="language-"] {
+    padding: 0.1em;
+    border-radius: 0.3em;
+  }
+
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: #586e75;
+  }
+
+  .token.punctuation {
+    color: #93a1a1;
+  }
+
+  .namespace {
+    opacity: 0.7;
+  }
+
+  .token.property,
+  .token.keyword,
+  .token.tag {
+    color: #268bd2;
+  }
+
+  .token.class-name {
+    color: #ffffb6;
+    text-decoration: underline;
+  }
+
+  .token.boolean,
+  .token.constant {
+    color: #b58900;
+  }
+
+  .token.symbol,
+  .token.deleted {
+    color: #dc322f;
+  }
+
+  .token.number {
+    color: #859900;
+  }
+
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: #859900;
+  }
+
+  .token.variable {
+    color: #268bd2;
+  }
+
+  .token.operator {
+    color: #ededed;
+  }
+
+  .token.function {
+    color: #268bd2;
+  }
+
+  .token.regex {
+    color: #e9c062;
+  }
+
+  .token.important {
+    color: #fd971f;
+  }
+
+  .token.entity {
+    color: #ffffb6;
+    cursor: help;
+  }
+
+  .token.url {
+    color: #96cbfe;
+  }
+
+  .language-css .token.string,
+  .style .token.string {
+    color: #87c38a;
+  }
+
+  .token.important,
+  .token.bold {
+    font-weight: bold;
+  }
+
+  .token.italic {
+    font-style: italic;
+  }
+
+  .token.atrule,
+  .token.attr-value {
+    color: #f9ee98;
+  }
+</style>
+<script>
+  /* PrismJS 1.29.0
+https://prismjs.com/download.html#themes=prism-dark&languages=markup+css+clike+javascript+mermaid */
+  var _self =
+      "undefined" != typeof window
+        ? window
+        : "undefined" != typeof WorkerGlobalScope &&
+          self instanceof WorkerGlobalScope
+        ? self
+        : {},
+    Prism = (function (e) {
+      var n = /(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i,
+        t = 0,
+        r = {},
+        a = {
+          manual: e.Prism && e.Prism.manual,
+          disableWorkerMessageHandler:
+            e.Prism && e.Prism.disableWorkerMessageHandler,
+          util: {
+            encode: function e(n) {
+              return n instanceof i
+                ? new i(n.type, e(n.content), n.alias)
+                : Array.isArray(n)
+                ? n.map(e)
+                : n
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/\u00a0/g, " ");
+            },
+            type: function (e) {
+              return Object.prototype.toString.call(e).slice(8, -1);
+            },
+            objId: function (e) {
+              return (
+                e.__id || Object.defineProperty(e, "__id", { value: ++t }),
+                e.__id
+              );
+            },
+            clone: function e(n, t) {
+              var r, i;
+              switch (((t = t || {}), a.util.type(n))) {
+                case "Object":
+                  if (((i = a.util.objId(n)), t[i])) return t[i];
+                  for (var l in ((r = {}), (t[i] = r), n))
+                    n.hasOwnProperty(l) && (r[l] = e(n[l], t));
+                  return r;
+                case "Array":
+                  return (
+                    (i = a.util.objId(n)),
+                    t[i]
+                      ? t[i]
+                      : ((r = []),
+                        (t[i] = r),
+                        n.forEach(function (n, a) {
+                          r[a] = e(n, t);
+                        }),
+                        r)
+                  );
+                default:
+                  return n;
+              }
+            },
+            getLanguage: function (e) {
+              for (; e; ) {
+                var t = n.exec(e.className);
+                if (t) return t[1].toLowerCase();
+                e = e.parentElement;
+              }
+              return "none";
+            },
+            setLanguage: function (e, t) {
+              (e.className = e.className.replace(RegExp(n, "gi"), "")),
+                e.classList.add("language-" + t);
+            },
+            currentScript: function () {
+              if ("undefined" == typeof document) return null;
+              if ("currentScript" in document) return document.currentScript;
+              try {
+                throw new Error();
+              } catch (r) {
+                var e = (/at [^(\r\n]*\((.*):[^:]+:[^:]+\)$/i.exec(r.stack) ||
+                  [])[1];
+                if (e) {
+                  var n = document.getElementsByTagName("script");
+                  for (var t in n) if (n[t].src == e) return n[t];
+                }
+                return null;
+              }
+            },
+            isActive: function (e, n, t) {
+              for (var r = "no-" + n; e; ) {
+                var a = e.classList;
+                if (a.contains(n)) return !0;
+                if (a.contains(r)) return !1;
+                e = e.parentElement;
+              }
+              return !!t;
+            },
+          },
+          languages: {
+            plain: r,
+            plaintext: r,
+            text: r,
+            txt: r,
+            extend: function (e, n) {
+              var t = a.util.clone(a.languages[e]);
+              for (var r in n) t[r] = n[r];
+              return t;
+            },
+            insertBefore: function (e, n, t, r) {
+              var i = (r = r || a.languages)[e],
+                l = {};
+              for (var o in i)
+                if (i.hasOwnProperty(o)) {
+                  if (o == n)
+                    for (var s in t) t.hasOwnProperty(s) && (l[s] = t[s]);
+                  t.hasOwnProperty(o) || (l[o] = i[o]);
+                }
+              var u = r[e];
+              return (
+                (r[e] = l),
+                a.languages.DFS(a.languages, function (n, t) {
+                  t === u && n != e && (this[n] = l);
+                }),
+                l
+              );
+            },
+            DFS: function e(n, t, r, i) {
+              i = i || {};
+              var l = a.util.objId;
+              for (var o in n)
+                if (n.hasOwnProperty(o)) {
+                  t.call(n, o, n[o], r || o);
+                  var s = n[o],
+                    u = a.util.type(s);
+                  "Object" !== u || i[l(s)]
+                    ? "Array" !== u ||
+                      i[l(s)] ||
+                      ((i[l(s)] = !0), e(s, t, o, i))
+                    : ((i[l(s)] = !0), e(s, t, null, i));
+                }
+            },
+          },
+          plugins: {},
+          highlightAll: function (e, n) {
+            a.highlightAllUnder(document, e, n);
+          },
+          highlightAllUnder: function (e, n, t) {
+            var r = {
+              callback: t,
+              container: e,
+              selector:
+                'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code',
+            };
+            a.hooks.run("before-highlightall", r),
+              (r.elements = Array.prototype.slice.apply(
+                r.container.querySelectorAll(r.selector),
+              )),
+              a.hooks.run("before-all-elements-highlight", r);
+            for (var i, l = 0; (i = r.elements[l++]); )
+              a.highlightElement(i, !0 === n, r.callback);
+          },
+          highlightElement: function (n, t, r) {
+            var i = a.util.getLanguage(n),
+              l = a.languages[i];
+            a.util.setLanguage(n, i);
+            var o = n.parentElement;
+            o && "pre" === o.nodeName.toLowerCase() && a.util.setLanguage(o, i);
+            var s = {
+              element: n,
+              language: i,
+              grammar: l,
+              code: n.textContent,
+            };
+            function u(e) {
+              (s.highlightedCode = e),
+                a.hooks.run("before-insert", s),
+                (s.element.innerHTML = s.highlightedCode),
+                a.hooks.run("after-highlight", s),
+                a.hooks.run("complete", s),
+                r && r.call(s.element);
+            }
+            if (
+              (a.hooks.run("before-sanity-check", s),
+              (o = s.element.parentElement) &&
+                "pre" === o.nodeName.toLowerCase() &&
+                !o.hasAttribute("tabindex") &&
+                o.setAttribute("tabindex", "0"),
+              !s.code)
+            )
+              return a.hooks.run("complete", s), void (r && r.call(s.element));
+            if ((a.hooks.run("before-highlight", s), s.grammar))
+              if (t && e.Worker) {
+                var c = new Worker(a.filename);
+                (c.onmessage = function (e) {
+                  u(e.data);
+                }),
+                  c.postMessage(
+                    JSON.stringify({
+                      language: s.language,
+                      code: s.code,
+                      immediateClose: !0,
+                    }),
+                  );
+              } else u(a.highlight(s.code, s.grammar, s.language));
+            else u(a.util.encode(s.code));
+          },
+          highlight: function (e, n, t) {
+            var r = { code: e, grammar: n, language: t };
+            if ((a.hooks.run("before-tokenize", r), !r.grammar))
+              throw new Error(
+                'The language "' + r.language + '" has no grammar.',
+              );
+            return (
+              (r.tokens = a.tokenize(r.code, r.grammar)),
+              a.hooks.run("after-tokenize", r),
+              i.stringify(a.util.encode(r.tokens), r.language)
+            );
+          },
+          tokenize: function (e, n) {
+            var t = n.rest;
+            if (t) {
+              for (var r in t) n[r] = t[r];
+              delete n.rest;
+            }
+            var a = new s();
+            return (
+              u(a, a.head, e),
+              o(e, a, n, a.head, 0),
+              (function (e) {
+                for (var n = [], t = e.head.next; t !== e.tail; )
+                  n.push(t.value), (t = t.next);
+                return n;
+              })(a)
+            );
+          },
+          hooks: {
+            all: {},
+            add: function (e, n) {
+              var t = a.hooks.all;
+              (t[e] = t[e] || []), t[e].push(n);
+            },
+            run: function (e, n) {
+              var t = a.hooks.all[e];
+              if (t && t.length) for (var r, i = 0; (r = t[i++]); ) r(n);
+            },
+          },
+          Token: i,
+        };
+      function i(e, n, t, r) {
+        (this.type = e),
+          (this.content = n),
+          (this.alias = t),
+          (this.length = 0 | (r || "").length);
+      }
+      function l(e, n, t, r) {
+        e.lastIndex = n;
+        var a = e.exec(t);
+        if (a && r && a[1]) {
+          var i = a[1].length;
+          (a.index += i), (a[0] = a[0].slice(i));
+        }
+        return a;
+      }
+      function o(e, n, t, r, s, g) {
+        for (var f in t)
+          if (t.hasOwnProperty(f) && t[f]) {
+            var h = t[f];
+            h = Array.isArray(h) ? h : [h];
+            for (var d = 0; d < h.length; ++d) {
+              if (g && g.cause == f + "," + d) return;
+              var v = h[d],
+                p = v.inside,
+                m = !!v.lookbehind,
+                y = !!v.greedy,
+                k = v.alias;
+              if (y && !v.pattern.global) {
+                var x = v.pattern.toString().match(/[imsuy]*$/)[0];
+                v.pattern = RegExp(v.pattern.source, x + "g");
+              }
+              for (
+                var b = v.pattern || v, w = r.next, A = s;
+                w !== n.tail && !(g && A >= g.reach);
+                A += w.value.length, w = w.next
+              ) {
+                var E = w.value;
+                if (n.length > e.length) return;
+                if (!(E instanceof i)) {
+                  var P,
+                    L = 1;
+                  if (y) {
+                    if (!(P = l(b, A, e, m)) || P.index >= e.length) break;
+                    var S = P.index,
+                      O = P.index + P[0].length,
+                      j = A;
+                    for (j += w.value.length; S >= j; )
+                      j += (w = w.next).value.length;
+                    if (((A = j -= w.value.length), w.value instanceof i))
+                      continue;
+                    for (
+                      var C = w;
+                      C !== n.tail && (j < O || "string" == typeof C.value);
+                      C = C.next
+                    )
+                      L++, (j += C.value.length);
+                    L--, (E = e.slice(A, j)), (P.index -= A);
+                  } else if (!(P = l(b, 0, E, m))) continue;
+                  S = P.index;
+                  var N = P[0],
+                    _ = E.slice(0, S),
+                    M = E.slice(S + N.length),
+                    W = A + E.length;
+                  g && W > g.reach && (g.reach = W);
+                  var z = w.prev;
+                  if (
+                    (_ && ((z = u(n, z, _)), (A += _.length)),
+                    c(n, z, L),
+                    (w = u(n, z, new i(f, p ? a.tokenize(N, p) : N, k, N))),
+                    M && u(n, w, M),
+                    L > 1)
+                  ) {
+                    var I = { cause: f + "," + d, reach: W };
+                    o(e, n, t, w.prev, A, I),
+                      g && I.reach > g.reach && (g.reach = I.reach);
+                  }
+                }
+              }
+            }
+          }
+      }
+      function s() {
+        var e = { value: null, prev: null, next: null },
+          n = { value: null, prev: e, next: null };
+        (e.next = n), (this.head = e), (this.tail = n), (this.length = 0);
+      }
+      function u(e, n, t) {
+        var r = n.next,
+          a = { value: t, prev: n, next: r };
+        return (n.next = a), (r.prev = a), e.length++, a;
+      }
+      function c(e, n, t) {
+        for (var r = n.next, a = 0; a < t && r !== e.tail; a++) r = r.next;
+        (n.next = r), (r.prev = n), (e.length -= a);
+      }
+      if (
+        ((e.Prism = a),
+        (i.stringify = function e(n, t) {
+          if ("string" == typeof n) return n;
+          if (Array.isArray(n)) {
+            var r = "";
+            return (
+              n.forEach(function (n) {
+                r += e(n, t);
+              }),
+              r
+            );
+          }
+          var i = {
+              type: n.type,
+              content: e(n.content, t),
+              tag: "span",
+              classes: ["token", n.type],
+              attributes: {},
+              language: t,
+            },
+            l = n.alias;
+          l &&
+            (Array.isArray(l)
+              ? Array.prototype.push.apply(i.classes, l)
+              : i.classes.push(l)),
+            a.hooks.run("wrap", i);
+          var o = "";
+          for (var s in i.attributes)
+            o +=
+              " " +
+              s +
+              '="' +
+              (i.attributes[s] || "").replace(/"/g, "&quot;") +
+              '"';
+          return (
+            "<" +
+            i.tag +
+            ' class="' +
+            i.classes.join(" ") +
+            '"' +
+            o +
+            ">" +
+            i.content +
+            "</" +
+            i.tag +
+            ">"
+          );
+        }),
+        !e.document)
+      )
+        return e.addEventListener
+          ? (a.disableWorkerMessageHandler ||
+              e.addEventListener(
+                "message",
+                function (n) {
+                  var t = JSON.parse(n.data),
+                    r = t.language,
+                    i = t.code,
+                    l = t.immediateClose;
+                  e.postMessage(a.highlight(i, a.languages[r], r)),
+                    l && e.close();
+                },
+                !1,
+              ),
+            a)
+          : a;
+      var g = a.util.currentScript();
+      function f() {
+        a.manual || a.highlightAll();
+      }
+      if (
+        (g &&
+          ((a.filename = g.src),
+          g.hasAttribute("data-manual") && (a.manual = !0)),
+        !a.manual)
+      ) {
+        var h = document.readyState;
+        "loading" === h || ("interactive" === h && g && g.defer)
+          ? document.addEventListener("DOMContentLoaded", f)
+          : window.requestAnimationFrame
+          ? window.requestAnimationFrame(f)
+          : window.setTimeout(f, 16);
+      }
+      return a;
+    })(_self);
+  "undefined" != typeof module && module.exports && (module.exports = Prism),
+    "undefined" != typeof global && (global.Prism = Prism);
+  (Prism.languages.markup = {
+    comment: { pattern: /<!--(?:(?!<!--)[\s\S])*?-->/, greedy: !0 },
+    prolog: { pattern: /<\?[\s\S]+?\?>/, greedy: !0 },
+    doctype: {
+      pattern:
+        /<!DOCTYPE(?:[^>"'[\]]|"[^"]*"|'[^']*')+(?:\[(?:[^<"'\]]|"[^"]*"|'[^']*'|<(?!!--)|<!--(?:[^-]|-(?!->))*-->)*\]\s*)?>/i,
+      greedy: !0,
+      inside: {
+        "internal-subset": {
+          pattern: /(^[^\[]*\[)[\s\S]+(?=\]>$)/,
+          lookbehind: !0,
+          greedy: !0,
+          inside: null,
+        },
+        string: { pattern: /"[^"]*"|'[^']*'/, greedy: !0 },
+        punctuation: /^<!|>$|[[\]]/,
+        "doctype-tag": /^DOCTYPE/i,
+        name: /[^\s<>'"]+/,
+      },
+    },
+    cdata: { pattern: /<!\[CDATA\[[\s\S]*?\]\]>/i, greedy: !0 },
+    tag: {
+      pattern:
+        /<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/,
+      greedy: !0,
+      inside: {
+        tag: {
+          pattern: /^<\/?[^\s>\/]+/,
+          inside: { punctuation: /^<\/?/, namespace: /^[^\s>\/:]+:/ },
+        },
+        "special-attr": [],
+        "attr-value": {
+          pattern: /=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/,
+          inside: {
+            punctuation: [
+              { pattern: /^=/, alias: "attr-equals" },
+              { pattern: /^(\s*)["']|["']$/, lookbehind: !0 },
+            ],
+          },
+        },
+        punctuation: /\/?>/,
+        "attr-name": {
+          pattern: /[^\s>\/]+/,
+          inside: { namespace: /^[^\s>\/:]+:/ },
+        },
+      },
+    },
+    entity: [
+      { pattern: /&[\da-z]{1,8};/i, alias: "named-entity" },
+      /&#x?[\da-f]{1,8};/i,
+    ],
+  }),
+    (Prism.languages.markup.tag.inside["attr-value"].inside.entity =
+      Prism.languages.markup.entity),
+    (Prism.languages.markup.doctype.inside["internal-subset"].inside =
+      Prism.languages.markup),
+    Prism.hooks.add("wrap", function (a) {
+      "entity" === a.type &&
+        (a.attributes.title = a.content.replace(/&amp;/, "&"));
+    }),
+    Object.defineProperty(Prism.languages.markup.tag, "addInlined", {
+      value: function (a, e) {
+        var s = {};
+        (s["language-" + e] = {
+          pattern: /(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,
+          lookbehind: !0,
+          inside: Prism.languages[e],
+        }),
+          (s.cdata = /^<!\[CDATA\[|\]\]>$/i);
+        var t = {
+          "included-cdata": { pattern: /<!\[CDATA\[[\s\S]*?\]\]>/i, inside: s },
+        };
+        t["language-" + e] = { pattern: /[\s\S]+/, inside: Prism.languages[e] };
+        var n = {};
+        (n[a] = {
+          pattern: RegExp(
+            "(<__[^>]*>)(?:<!\\[CDATA\\[(?:[^\\]]|\\](?!\\]>))*\\]\\]>|(?!<!\\[CDATA\\[)[^])*?(?=</__>)".replace(
+              /__/g,
+              function () {
+                return a;
+              },
+            ),
+            "i",
+          ),
+          lookbehind: !0,
+          greedy: !0,
+          inside: t,
+        }),
+          Prism.languages.insertBefore("markup", "cdata", n);
+      },
+    }),
+    Object.defineProperty(Prism.languages.markup.tag, "addAttribute", {
+      value: function (a, e) {
+        Prism.languages.markup.tag.inside["special-attr"].push({
+          pattern: RegExp(
+            "(^|[\"'\\s])(?:" +
+              a +
+              ")\\s*=\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s'\">=]+(?=[\\s>]))",
+            "i",
+          ),
+          lookbehind: !0,
+          inside: {
+            "attr-name": /^[^\s=]+/,
+            "attr-value": {
+              pattern: /=[\s\S]+/,
+              inside: {
+                value: {
+                  pattern: /(^=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,
+                  lookbehind: !0,
+                  alias: [e, "language-" + e],
+                  inside: Prism.languages[e],
+                },
+                punctuation: [{ pattern: /^=/, alias: "attr-equals" }, /"|'/],
+              },
+            },
+          },
+        });
+      },
+    }),
+    (Prism.languages.html = Prism.languages.markup),
+    (Prism.languages.mathml = Prism.languages.markup),
+    (Prism.languages.svg = Prism.languages.markup),
+    (Prism.languages.xml = Prism.languages.extend("markup", {})),
+    (Prism.languages.ssml = Prism.languages.xml),
+    (Prism.languages.atom = Prism.languages.xml),
+    (Prism.languages.rss = Prism.languages.xml);
+  !(function (s) {
+    var e =
+      /(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;
+    (s.languages.css = {
+      comment: /\/\*[\s\S]*?\*\//,
+      atrule: {
+        pattern: RegExp(
+          "@[\\w-](?:[^;{\\s\"']|\\s+(?!\\s)|" +
+            e.source +
+            ")*?(?:;|(?=\\s*\\{))",
+        ),
+        inside: {
+          rule: /^@[\w-]+/,
+          "selector-function-argument": {
+            pattern:
+              /(\bselector\s*\(\s*(?![\s)]))(?:[^()\s]|\s+(?![\s)])|\((?:[^()]|\([^()]*\))*\))+(?=\s*\))/,
+            lookbehind: !0,
+            alias: "selector",
+          },
+          keyword: {
+            pattern: /(^|[^\w-])(?:and|not|only|or)(?![\w-])/,
+            lookbehind: !0,
+          },
+        },
+      },
+      url: {
+        pattern: RegExp(
+          "\\burl\\((?:" + e.source + "|(?:[^\\\\\r\n()\"']|\\\\[^])*)\\)",
+          "i",
+        ),
+        greedy: !0,
+        inside: {
+          function: /^url/i,
+          punctuation: /^\(|\)$/,
+          string: { pattern: RegExp("^" + e.source + "$"), alias: "url" },
+        },
+      },
+      selector: {
+        pattern: RegExp(
+          "(^|[{}\\s])[^{}\\s](?:[^{};\"'\\s]|\\s+(?![\\s{])|" +
+            e.source +
+            ")*(?=\\s*\\{)",
+        ),
+        lookbehind: !0,
+      },
+      string: { pattern: e, greedy: !0 },
+      property: {
+        pattern:
+          /(^|[^-\w\xA0-\uFFFF])(?!\s)[-_a-z\xA0-\uFFFF](?:(?!\s)[-\w\xA0-\uFFFF])*(?=\s*:)/i,
+        lookbehind: !0,
+      },
+      important: /!important\b/i,
+      function: { pattern: /(^|[^-a-z0-9])[-a-z0-9]+(?=\()/i, lookbehind: !0 },
+      punctuation: /[(){};:,]/,
+    }),
+      (s.languages.css.atrule.inside.rest = s.languages.css);
+    var t = s.languages.markup;
+    t && (t.tag.addInlined("style", "css"), t.tag.addAttribute("style", "css"));
+  })(Prism);
+  Prism.languages.clike = {
+    comment: [
+      {
+        pattern: /(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,
+        lookbehind: !0,
+        greedy: !0,
+      },
+      { pattern: /(^|[^\\:])\/\/.*/, lookbehind: !0, greedy: !0 },
+    ],
+    string: {
+      pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+      greedy: !0,
+    },
+    "class-name": {
+      pattern:
+        /(\b(?:class|extends|implements|instanceof|interface|new|trait)\s+|\bcatch\s+\()[\w.\\]+/i,
+      lookbehind: !0,
+      inside: { punctuation: /[.\\]/ },
+    },
+    keyword:
+      /\b(?:break|catch|continue|do|else|finally|for|function|if|in|instanceof|new|null|return|throw|try|while)\b/,
+    boolean: /\b(?:false|true)\b/,
+    function: /\b\w+(?=\()/,
+    number: /\b0x[\da-f]+\b|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?/i,
+    operator: /[<>]=?|[!=]=?=?|--?|\+\+?|&&?|\|\|?|[?*/~^%]/,
+    punctuation: /[{}[\];(),.:]/,
+  };
+  (Prism.languages.javascript = Prism.languages.extend("clike", {
+    "class-name": [
+      Prism.languages.clike["class-name"],
+      {
+        pattern:
+          /(^|[^$\w\xA0-\uFFFF])(?!\s)[_$A-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\.(?:constructor|prototype))/,
+        lookbehind: !0,
+      },
+    ],
+    keyword: [
+      { pattern: /((?:^|\})\s*)catch\b/, lookbehind: !0 },
+      {
+        pattern:
+          /(^|[^.]|\.\.\.\s*)\b(?:as|assert(?=\s*\{)|async(?=\s*(?:function\b|\(|[$\w\xA0-\uFFFF]|$))|await|break|case|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally(?=\s*(?:\{|$))|for|from(?=\s*(?:['"]|$))|function|(?:get|set)(?=\s*(?:[#\[$\w\xA0-\uFFFF]|$))|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)\b/,
+        lookbehind: !0,
+      },
+    ],
+    function:
+      /#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*(?:\.\s*(?:apply|bind|call)\s*)?\()/,
+    number: {
+      pattern: RegExp(
+        "(^|[^\\w$])(?:NaN|Infinity|0[bB][01]+(?:_[01]+)*n?|0[oO][0-7]+(?:_[0-7]+)*n?|0[xX][\\dA-Fa-f]+(?:_[\\dA-Fa-f]+)*n?|\\d+(?:_\\d+)*n|(?:\\d+(?:_\\d+)*(?:\\.(?:\\d+(?:_\\d+)*)?)?|\\.\\d+(?:_\\d+)*)(?:[Ee][+-]?\\d+(?:_\\d+)*)?)(?![\\w$])",
+      ),
+      lookbehind: !0,
+    },
+    operator:
+      /--|\+\+|\*\*=?|=>|&&=?|\|\|=?|[!=]==|<<=?|>>>?=?|[-+*/%&|^!=<>]=?|\.{3}|\?\?=?|\?\.?|[~:]/,
+  })),
+    (Prism.languages.javascript["class-name"][0].pattern =
+      /(\b(?:class|extends|implements|instanceof|interface|new)\s+)[\w.\\]+/),
+    Prism.languages.insertBefore("javascript", "keyword", {
+      regex: {
+        pattern: RegExp(
+          "((?:^|[^$\\w\\xA0-\\uFFFF.\"'\\])\\s]|\\b(?:return|yield))\\s*)/(?:(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}|(?:\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.)*\\])*\\])*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}v[dgimyus]{0,7})(?=(?:\\s|/\\*(?:[^*]|\\*(?!/))*\\*/)*(?:$|[\r\n,.;:})\\]]|//))",
+        ),
+        lookbehind: !0,
+        greedy: !0,
+        inside: {
+          "regex-source": {
+            pattern: /^(\/)[\s\S]+(?=\/[a-z]*$)/,
+            lookbehind: !0,
+            alias: "language-regex",
+            inside: Prism.languages.regex,
+          },
+          "regex-delimiter": /^\/|\/$/,
+          "regex-flags": /^[a-z]+$/,
+        },
+      },
+      "function-variable": {
+        pattern:
+          /#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*[=:]\s*(?:async\s*)?(?:\bfunction\b|(?:\((?:[^()]|\([^()]*\))*\)|(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)\s*=>))/,
+        alias: "function",
+      },
+      parameter: [
+        {
+          pattern:
+            /(function(?:\s+(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)?\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\))/,
+          lookbehind: !0,
+          inside: Prism.languages.javascript,
+        },
+        {
+          pattern:
+            /(^|[^$\w\xA0-\uFFFF])(?!\s)[_$a-z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*=>)/i,
+          lookbehind: !0,
+          inside: Prism.languages.javascript,
+        },
+        {
+          pattern:
+            /(\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*=>)/,
+          lookbehind: !0,
+          inside: Prism.languages.javascript,
+        },
+        {
+          pattern:
+            /((?:\b|\s|^)(?!(?:as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)(?![$\w\xA0-\uFFFF]))(?:(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*)\(\s*|\]\s*\(\s*)(?!\s)(?:[^()\s]|\s+(?![\s)])|\([^()]*\))+(?=\s*\)\s*\{)/,
+          lookbehind: !0,
+          inside: Prism.languages.javascript,
+        },
+      ],
+      constant: /\b[A-Z](?:[A-Z_]|\dx?)*\b/,
+    }),
+    Prism.languages.insertBefore("javascript", "string", {
+      hashbang: { pattern: /^#!.*/, greedy: !0, alias: "comment" },
+      "template-string": {
+        pattern:
+          /`(?:\\[\s\S]|\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}|(?!\$\{)[^\\`])*`/,
+        greedy: !0,
+        inside: {
+          "template-punctuation": { pattern: /^`|`$/, alias: "string" },
+          interpolation: {
+            pattern:
+              /((?:^|[^\\])(?:\\{2})*)\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}/,
+            lookbehind: !0,
+            inside: {
+              "interpolation-punctuation": {
+                pattern: /^\$\{|\}$/,
+                alias: "punctuation",
+              },
+              rest: Prism.languages.javascript,
+            },
+          },
+          string: /[\s\S]+/,
+        },
+      },
+      "string-property": {
+        pattern:
+          /((?:^|[,{])[ \t]*)(["'])(?:\\(?:\r\n|[\s\S])|(?!\2)[^\\\r\n])*\2(?=\s*:)/m,
+        lookbehind: !0,
+        greedy: !0,
+        alias: "property",
+      },
+    }),
+    Prism.languages.insertBefore("javascript", "operator", {
+      "literal-property": {
+        pattern:
+          /((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,
+        lookbehind: !0,
+        alias: "property",
+      },
+    }),
+    Prism.languages.markup &&
+      (Prism.languages.markup.tag.addInlined("script", "javascript"),
+      Prism.languages.markup.tag.addAttribute(
+        "on(?:abort|blur|change|click|composition(?:end|start|update)|dblclick|error|focus(?:in|out)?|key(?:down|up)|load|mouse(?:down|enter|leave|move|out|over|up)|reset|resize|scroll|select|slotchange|submit|unload|wheel)",
+        "javascript",
+      )),
+    (Prism.languages.js = Prism.languages.javascript);
+  Prism.languages.mermaid = {
+    comment: { pattern: /%%.*/, greedy: !0 },
+    style: {
+      pattern:
+        /^([ \t]*(?:classDef|linkStyle|style)[ \t]+[\w$-]+[ \t]+)\w.*[^\s;]/m,
+      lookbehind: !0,
+      inside: {
+        property: /\b\w[\w-]*(?=[ \t]*:)/,
+        operator: /:/,
+        punctuation: /,/,
+      },
+    },
+    "inter-arrow-label": {
+      pattern:
+        /([^<>ox.=-])(?:-[-.]|==)(?![<>ox.=-])[ \t]*(?:"[^"\r\n]*"|[^\s".=-](?:[^\r\n.=-]*[^\s.=-])?)[ \t]*(?:\.+->?|--+[->]|==+[=>])(?![<>ox.=-])/,
+      lookbehind: !0,
+      greedy: !0,
+      inside: {
+        arrow: { pattern: /(?:\.+->?|--+[->]|==+[=>])$/, alias: "operator" },
+        label: {
+          pattern: /^([\s\S]{2}[ \t]*)\S(?:[\s\S]*\S)?/,
+          lookbehind: !0,
+          alias: "property",
+        },
+        "arrow-head": { pattern: /^\S+/, alias: ["arrow", "operator"] },
+      },
+    },
+    arrow: [
+      {
+        pattern: /(^|[^{}|o.-])[|}][|o](?:--|\.\.)[|o][|{](?![{}|o.-])/,
+        lookbehind: !0,
+        alias: "operator",
+      },
+      {
+        pattern:
+          /(^|[^<>ox.=-])(?:[<ox](?:==+|--+|-\.*-)[>ox]?|(?:==+|--+|-\.*-)[>ox]|===+|---+|-\.+-)(?![<>ox.=-])/,
+        lookbehind: !0,
+        alias: "operator",
+      },
+      {
+        pattern:
+          /(^|[^<>()x-])(?:--?(?:>>|[x>)])(?![<>()x])|(?:<<|[x<(])--?(?!-))/,
+        lookbehind: !0,
+        alias: "operator",
+      },
+      {
+        pattern:
+          /(^|[^<>|*o.-])(?:[*o]--|--[*o]|<\|?(?:--|\.\.)|(?:--|\.\.)\|?>|--|\.\.)(?![<>|*o.-])/,
+        lookbehind: !0,
+        alias: "operator",
+      },
+    ],
+    label: {
+      pattern: /(^|[^|<])\|(?:[^\r\n"|]|"[^"\r\n]*")+\|/,
+      lookbehind: !0,
+      greedy: !0,
+      alias: "property",
+    },
+    text: {
+      pattern: /(?:[(\[{]+|\b>)(?:[^\r\n"()\[\]{}]|"[^"\r\n]*")+(?:[)\]}]+|>)/,
+      alias: "string",
+    },
+    string: { pattern: /"[^"\r\n]*"/, greedy: !0 },
+    annotation: {
+      pattern:
+        /<<(?:abstract|choice|enumeration|fork|interface|join|service)>>|\[\[(?:choice|fork|join)\]\]/i,
+      alias: "important",
+    },
+    keyword: [
+      {
+        pattern:
+          /(^[ \t]*)(?:action|callback|class|classDef|classDiagram|click|direction|erDiagram|flowchart|gantt|gitGraph|graph|journey|link|linkStyle|pie|requirementDiagram|sequenceDiagram|stateDiagram|stateDiagram-v2|style|subgraph)(?![\w$-])/m,
+        lookbehind: !0,
+        greedy: !0,
+      },
+      {
+        pattern:
+          /(^[ \t]*)(?:activate|alt|and|as|autonumber|deactivate|else|end(?:[ \t]+note)?|loop|opt|par|participant|rect|state|note[ \t]+(?:over|(?:left|right)[ \t]+of))(?![\w$-])/im,
+        lookbehind: !0,
+        greedy: !0,
+      },
+    ],
+    entity: /#[a-z0-9]+;/,
+    operator: { pattern: /(\w[ \t]*)&(?=[ \t]*\w)|:::|:/, lookbehind: !0 },
+    punctuation: /[(){};]/,
+  };
+  Prism.languages.aiken = {
+    doc: {
+      pattern: /\/\/\/\/?.*/,
+      greedy: true,
+    },
+    comment: {
+      pattern: /\/\/.*/,
+      greedy: true,
+    },
+    function: /(?<=fn )([a-z_][a-z0-9_]+)(?=\()/,
+    keyword:
+      /\b(use|case|if|external|fn|import|let|assert|try|pub|type|opaque|const|todo|as)\b/,
+    operator: {
+      pattern:
+        /(<<|>>|<-|->|\|>|<>|\.\.|<=\.?|>=\.?|==\.?|!=\.?|<\.?|>\.?|&&|\|\||\+\.?|-\.?|\/\.?|\*\.?|%\.?|=)/,
+      greedy: true,
+    },
+    string: {
+      pattern: /"(?:\\(?:\r\n|[\s\S])|(?!")[^\\\r\n])*"/,
+      greedy: true,
+      inside: {
+        punctuation: /\\./,
+      },
+    },
+    punctuation: /[.\\:,{}()]/,
+    number:
+      /\b(?:0b[0-1]+|0o[0-7]+|[[:digit:]][[:digit:]_]*(\\.[[:digit:]]*)?|0x[[:xdigit:]]+)\b/,
+    boolean: /\b(?:True|False)\b/,
+  };
+</script>      <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <main>
+             <header id="title-block-header">
+        <h1 class="title">Atrium Pages : Spec</h1>
+                 <p class="author">waagle, Kompact.io</p>
+                </header>
+        <h1 data-number="1" id="intro"><span
+class="header-section-number">1</span> Intro</h1>
+<p>This document contains:</p>
+<ul>
+<li>A non-technical overview of how the dapp works</li>
+<li>A specification:
+<ul>
+<li>in terms of transactions (txs)</li>
+<li>of datatypes</li>
+</ul></li>
+<li>A description of terms</li>
+<li>Additional comments</li>
+</ul>
+<h2 data-number="1.1" id="dapp-overview"><span
+class="header-section-number">1.1</span> Dapp overview</h2>
+<p>The dapp is akin to a decentralised about-me page. Users attain a
+unique username, and are able to put in data and modify (replace) their
+<strong>page</strong>. This is then taken and formatted into a frontend
+(out of scope).</p>
+<p>From the user’s perspective the dapp is as follows: A user creates an
+account. They must acquire a unique username. They put their initial
+data on-chain. From this point forward, the user may modify this data
+(or more precisely write new data on-chain which we recognize as the
+new, correct value). The user may also wish to decommission their
+account, which removes the data from the chain.</p>
+<p>From a technical perspective, the data on-chain is organised as a
+sorted linked list. To make a new token it must be inserted into the
+list. The presence of a validity token verifies the datum’s legitimacy,
+and each datum references the name of the next item of the list (ie just
+like a linked list).</p>
+<h3 data-number="1.1.1" id="interop"><span
+class="header-section-number">1.1.1</span> Interop</h3>
+<p>The dapp will follow cip-68 in order to increase interoperability.
+The cip-68 proposal is <a
+href="https://cips.cardano.org/cips/cip68/">here</a>.</p>
+<p>When a user creates an account they mint two tokens:</p>
+<ul>
+<li>a <strong>user token</strong></li>
+<li>a <strong>script token</strong>, aka reference NFT</li>
+</ul>
+<p>cip-68 specifies that these tokens have labels appearing at the
+beginning of the asset name:</p>
+<ul>
+<li>user token: label 222</li>
+<li>script token: label 100</li>
+</ul>
+<p>The precise encoding is specified in <a
+href="https://cips.cardano.org/cips/cip67/">cip-67</a></p>
+<h2 data-number="1.2" id="agents-and-validators"><span
+class="header-section-number">1.2</span> Agents and validators</h2>
+<p>Participants of processes of the dapp are known as
+<strong>agents</strong> and have a corresponding payment address.</p>
+<ul>
+<li>User: pays ADA for an Atrium NFT, updates their own data. The names
+Alice, Bob, <em>etc</em> are used to represent users.</li>
+<li>Admin: Atrium administrator, receives payment for minting</li>
+</ul>
+<p>Admin represents essentially a single entity, while user is
+representative of many participants.</p>
+<p>There is a single multi-purpose validator that includes both spend
+and mint logic. We’ll refer to the validator address as ‘Validator’.</p>
+<p>In line with cip-68 there are two types of tokens. The script tokens
+are locked at the validator address and each has a corresponding user
+token.</p>
+<h2 data-number="1.3" id="txs"><span
+class="header-section-number">1.3</span> Txs</h2>
+<p>A transaction consists of inputs and outputs of utxos. Each utxo has
+a</p>
+<ul>
+<li>unique reference,</li>
+<li>an address it belongs to</li>
+<li>a value of ada + native assets (possibly no native assets)</li>
+<li>maybe a datum or datum hash. If the utxo belongs to a validator
+address, it must have a datum or datum hash.</li>
+</ul>
+<p>Addresses correspond to either agents, or validator addresses. All
+transactions must have at least one input that belongs to a payment
+address <em>ie</em> an agent’s address.</p>
+<p>In the following diagrams, boxes denote utxos. Owners of an address
+are stated first, then any notable assets or ada (that is, ignoring min
+ada or ada value that doesn’t change or change is negligible, or other
+tokens that are not relevant), then datums where relevant. All datums
+are assumed inline unless stated otherwise.</p>
+<h3 data-number="1.3.1" id="tx.init"><span
+class="header-section-number">1.3.1</span> <code>tx.init</code></h3>
+<p>In the beginning admin creates the first token.</p>
+<pre class="mermaid">flowchart LR
+i0["
+fa:fa-address-book Admin\n
+Seed\n
+"]
+m("tx")
+o0["
+fa:fa-address-book Admin \n
+fa:fa-circle UT Nil\n
+"]
+o1["
+fa:fa-address-book Validator \n
+fa:fa-circle ST Nil\n
+fa:fa-database { next : max_name, page: [('insert_fee', 123456)], ..}
+"]
+i0 --&gt; m --&gt; o0 & o1</pre>
+<p>The init is <em>seeded</em>. That is a utxo specified in the params
+is spent. Thus the validator address and policy id are unique to an
+init. Any other initialization will have a different address and policy
+id.</p>
+<p>The initial script token has a corresponding user token that is
+treated as an admin token. These have an empty name, denoted here by
+“Nil”.</p>
+<p>That the name is represented by an empty bytearry means that it is
+the 0th element of all bytearray under the standard ordering. As we
+construct the list of all pages on-chain, the admin token will always be
+first in line.</p>
+<p>The bytearray <code>max_name = [0xff; 28]</code>. The label is 4
+bytes; while the max token name on the ledger is 32. Thus this is the
+max token name</p>
+<p>Constraints:</p>
+<ol type="1">
+<li>Redeemer is <code>MintInit</code></li>
+<li>Spend seed</li>
+<li>Mint precisely cip-68 pair</li>
+<li>Own name is empty</li>
+<li>0th output:
+<ol type="1">
+<li>address is own address</li>
+<li>value has non ada value equal to script token</li>
+<li>datum is “Init” data</li>
+</ol></li>
+</ol>
+<p>Notes:</p>
+<ol type="1">
+<li>The init data includes costings.</li>
+<li>The staking key is fixed here.</li>
+</ol>
+<h3 data-number="1.3.2" id="tx.mint"><span
+class="header-section-number">1.3.2</span> <code>tx.mint</code></h3>
+<p>To create a page, a user must mint a token. They must insert their
+page into the existing list. Thus they must update the datum
+corresponding to entry immediately preceeding the new page.</p>
+<p>Suppose user “Alice” and user “Charlie” already have pages, and that
+in the ordering there is no user between Alice and Charlie. New user
+“Bob” must involve script token “Alice” in the mint tx in order to
+update the list.</p>
+<pre class="mermaid">flowchart LR
+    i0["
+    fa:fa-address-book Bob \n
+    fa:fa-circle ada \n
+    "]
+
+    i1["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Alice\n
+    fa:fa-database {next : Charlie, ..}
+    "]
+
+    r0["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Nil\n
+    fa:fa-database {page : {insert_fee, ..}, ..}
+    "]
+
+    m["tx"]
+
+    o0["
+    fa:fa-address-book Bob\n
+    fa:fa-circle UT Bob\n
+    "]
+
+    o1["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Alice\n
+    fa:fa-database {next : Bob, ..}
+    "]
+    o2["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Bob\n
+    fa:fa-database {next : Charlie, ..}
+    "]
+
+    o3["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ada \n
+    fa:fa-database FeeDatum
+    "]
+
+    r0 .-&gt; m
+    i0 & i1 --&gt; m --&gt; o0 & o1 & o2 & o3</pre>
+<p>Mint constraints:</p>
+<ol type="1">
+<li>Redeemer is <code>MintMint</code></li>
+<li>Must spend script token with redeemer <code>SpendInsert</code></li>
+</ol>
+<p>Spend constraints:</p>
+<ol type="1">
+<li>Redeemer is <code>SpendInsert</code></li>
+<li>Mint precisely cip-68 pair with name <code>mint_name</code></li>
+<li>Own name is strictly between own name and own next</li>
+<li>New name is strictly between own name and own next</li>
+<li>0th output is continuing output:
+<ol type="1">
+<li>address is own address</li>
+<li>value is ada and own script token</li>
+<li>datum is own datum with update <code>next : mint_name</code></li>
+</ol></li>
+<li>1st output is new output:
+<ol type="1">
+<li>address is own address</li>
+<li>value is ada and script token with name <code>mint_name</code></li>
+<li>datum has: version as own version; <code>next</code> as own next;
+<code>page</code> size less than <code>max_page_size</code></li>
+</ol></li>
+<li>2nd output is fee output:
+<ol type="1">
+<li>address is own address</li>
+<li>value is ada <code>&gt;= insert_fee</code></li>
+<li>datum is fee datum</li>
+</ol></li>
+</ol>
+<h3 data-number="1.3.3" id="tx.update"><span
+class="header-section-number">1.3.3</span> <code>tx.update</code></h3>
+<p>A user updates their page by supplying new data while spending their
+user token.</p>
+<pre class="mermaid">flowchart LR
+    i0["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Alice\n
+    fa:fa-database {page : current}
+    "]
+
+    i1["
+    fa:fa-address-book Alice \n
+    fa:fa-circle UT Alice\n
+    "]
+
+    m["tx"]
+    o0["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Alice\n
+    fa:fa-database {page : new}
+    "]
+
+    o1["
+    fa:fa-address-book Alice \n
+    fa:fa-circle UT Alice\n
+    "]
+
+    i0 & i1 --&gt; m --&gt; o0 & o1</pre>
+<p>Constraints:</p>
+<ol type="1">
+<li>Redeemer is <code>SpendUpdate</code></li>
+<li>0th output is continuing output:
+<ol type="1">
+<li>address is own address</li>
+<li>value is ada and own script token</li>
+<li>datum is own datum with updated <code>page : new_name</code> and
+<code>page</code> size less than <code>max_page_size</code></li>
+</ol></li>
+<li>1st output is user output:
+<ol type="1">
+<li>value is ada and user token</li>
+</ol></li>
+</ol>
+<h3 data-number="1.3.4" id="tx.collect"><span
+class="header-section-number">1.3.4</span> <code>tx.collect</code></h3>
+<p>Admin collects fees</p>
+<pre class="mermaid">flowchart LR
+    i0["
+    fa:fa-address-book Admin \n
+    fa:fa-circle UT Nil\n
+    "]
+
+    i1["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ada\n
+    fa:fa-database FeeDatum (1/n)
+    "]
+
+    i2["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ada\n
+    fa:fa-database FeeDatum (n/n)
+    "]
+
+    m["tx"]
+    o0["
+    fa:fa-address-book Admin \n
+    fa:fa-circle UT Nil\n
+    "]
+
+    o1["
+    fa:fa-address-book Admin \n
+    fa:fa-circle ada\n
+    "]
+
+    i0 & i1 & i2--&gt; m --&gt; o0 & o1</pre>
+<p>Constraints:</p>
+<ol type="1">
+<li>Redeemer is <code>SpendCollect</code></li>
+<li>Own input contains no script token</li>
+<li>0th output is admin output:
+<ol type="1">
+<li>value has admin user token</li>
+</ol></li>
+</ol>
+<p>Note:</p>
+<ol type="1">
+<li>Mutliple fees are collected simultaneously.</li>
+<li>We check the admin user token in the output, rather than input for
+no reason other than it is more convenient.</li>
+</ol>
+<h3 data-number="1.3.5" id="tx.burn"><span
+class="header-section-number">1.3.5</span> <code>tx.burn</code></h3>
+<p>This is the inverse of minting.</p>
+<pre class="mermaid">flowchart LR
+    i0["
+    fa:fa-address-book Bob \n
+    fa:fa-circle UT Bob \n
+    "]
+
+    i1["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Alice\n
+    fa:fa-database {next : Bob}
+    "]
+
+    i2["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Bob\n
+    fa:fa-database {next : Charlie}
+    "]
+
+    m["tx"]
+
+    o0["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Alice\n
+    fa:fa-database {next : Charlie}
+    "]
+
+    i0 & i1 & i2 --&gt; m --&gt; o0</pre>
+<p>Mint constraints:</p>
+<ol type="1">
+<li>Redeemer is <code>MintBurn</code></li>
+<li>Script token redeemers includes <code>SpendBurn</code> and
+<code>SpendRemove</code></li>
+</ol>
+<p><code>SpendBurn</code> constraints:</p>
+<ol type="1">
+<li>Burn precisely cip-68 pair with own name</li>
+</ol>
+<p><code>SpendRemove</code> constraints:</p>
+<ol type="1">
+<li>Burn precisely cip-68 pair with name <code>mint_name</code></li>
+<li>Own next is mint name</li>
+<li>0th output is continuing output:
+<ol type="1">
+<li>Address is own address</li>
+<li>Value is ada and own script token</li>
+<li>Datum is own datum with updated <code>next : burn_next</code>. Here
+burn next is found on the datum spent with <code>SpendBurn</code>.</li>
+</ol></li>
+</ol>
+<p>Notes:</p>
+<ol type="1">
+<li>The dependency requires some global constraints to be well-formed.
+Both spends check the mint value is in fact a burn. Neither check the
+redeemer. The only other mint action able to burn tokens is with
+<code>MintEnd</code>, and here would be impossible since it will only
+validate if spend redeemers as <code>SpendEnd</code>.</li>
+<li>Then mint checks two spends, so there is no possibility that one
+spend can take place in the absence of the other.</li>
+</ol>
+<h3 data-number="1.3.6" id="tx.end"><span
+class="header-section-number">1.3.6</span> <code>tx.end</code></h3>
+<p>This is the inverse of <code>tx.init</code>.</p>
+<pre class="mermaid">flowchart LR
+    i0["
+    fa:fa-address-book Admin\n
+    fa:fa-circle UT Nil \n
+    "]
+
+    i1["
+    fa:fa-address-book Validator\n
+    fa:fa-circle ST Nil\n
+    fa:fa-database {next : max_token_name}
+    "]
+
+    m["tx"]
+
+    o0["
+    fa:fa-address-book Admin\n
+    "]
+
+    i0 & i1 --&gt; m --&gt; o0</pre>
+<p>Mint constraints:</p>
+<ol type="1">
+<li>Redeemer is <code>MintEnd</code></li>
+<li>Script token redeemers is <code>SpendEnd</code></li>
+</ol>
+<p>Spend constraints:</p>
+<ol type="1">
+<li>Redeemer is <code>SpendBurn</code></li>
+<li>Own name is empty</li>
+<li>Own next is max token name</li>
+<li>Burn precisely cip-68 pair with name own name</li>
+</ol>
+<p>Note:</p>
+<ol type="1">
+<li>Only a singleton list can be ended. That is there are no users
+left.</li>
+</ol>
+<h2 data-number="1.4" id="data"><span
+class="header-section-number">1.4</span> Data</h2>
+<h3 data-number="1.4.1" id="params"><span
+class="header-section-number">1.4.1</span> Params</h3>
+<pre class="aiken language-aiken"><code>type Params {
+  seed: OutputReference,
+  max_page_size: Int,
+}</code></pre>
+<p>The seed ensures the instance has a unique policy id and address.</p>
+<h3 data-number="1.4.2" id="datum"><span
+class="header-section-number">1.4.2</span> Datum</h3>
+<p>The datum is mostly determined by cip-68. For example, the version
+number is to be compatible with cip-68.</p>
+<pre class="aiken language-aiken"><code>type Datum {
+  page: Page,
+  version: Int,
+  next: Name,
+}</code></pre>
+<p>We have the following type aliases</p>
+<pre class="aiken language-aiken"><code>type Page =
+  Dict&lt;ByteArray, Data&gt;
+
+type Name =
+  ByteArray</code></pre>
+<p>The admin datum must have the key “insert_fee” in its page. The
+correponding value must be coercible to an integer. This is referenced
+during a mint transaction.</p>
+<p>The fee datum is</p>
+<pre class="aiken language-aiken"><code>  Datum { page: dict.new(), version: -999, next: &quot;&quot; }</code></pre>
+<p>in order to passable when spent.</p>
+<h3 data-number="1.4.3" id="redeemers"><span
+class="header-section-number">1.4.3</span> Redeemers</h3>
+<p>For mint purpose</p>
+<pre class="aiken language-aiken"><code>type RedMint {
+  MintInit
+  MintMint
+  MintBurn
+  MintEnd
+}</code></pre>
+<p>For spend purpose</p>
+<pre class="aiken language-aiken"><code>type RedSpend {
+  SpendInser
+  SpendUpdate
+  SpendCollect
+  SpendBurn
+  SpendRemove
+  SpendEnd
+}</code></pre>
+<h2 data-number="1.5" id="design-notes"><span
+class="header-section-number">1.5</span> Design notes</h2>
+<h3 data-number="1.5.1" id="explicit-coupling"><span
+class="header-section-number">1.5.1</span> Explicit coupling</h3>
+<p>The only tx in which the mint validator is invoked without a spend
+validator is the init.</p>
+<p>We choose to make it explicit that every other time the mint
+validator is invoked it checks the spend validator has the correct
+redeemer(s). All other constraints are within the spend validator,
+including the mint value.</p>
+<p>There is some redundancy but it is not expensive and makes explicit
+that it is illegal for a transaction to have redeemers for mint and
+spend validators that are intended for different actions.</p>
+<h3 data-number="1.5.2" id="parameterized-uniqueness"><span
+class="header-section-number">1.5.2</span> Parameterized uniqueness</h3>
+<p>An init will have a unique script hash: the admin token can only be
+minted once. Every init will have a unique policy id.</p>
+<h3 data-number="1.5.3" id="bytearray-ordering"><span
+class="header-section-number">1.5.3</span> Bytearray ordering</h3>
+<p>For bytearrays <span
+class="math inline"><em>a</em>, <em>b</em></span> then <span
+class="math inline"><em>a</em> &lt; <em>b</em></span> provided that
+there exists some <span class="math inline">0 ≤ <em>k</em></span> such
+that for all <span
+class="math inline">0 ≤ <em>i</em> &lt; <em>k</em></span> then <span
+class="math inline"><em>a</em><sub><em>i</em></sub> = <em>b</em><sub><em>i</em></sub></span>
+and either the length of <span class="math inline"><em>a</em></span> is
+<span class="math inline"><em>k</em></span> or <span
+class="math inline"><em>a</em><sub><em>k</em></sub> &lt; <em>b</em><sub><em>k</em></sub></span>.</p>
+<p>For example <span
+class="math display">[1,2] &lt; [1,3].  [1,2] &lt; [1,2,3]</span></p>
+<h3 data-number="1.5.4" id="asset-names"><span
+class="header-section-number">1.5.4</span> Asset names</h3>
+<p>cip-67 and 68 specify that the prefix of the asset names of the
+tokens are (in base16)</p>
+<ul>
+<li><code>000643b0</code> for the script token</li>
+<li><code>000de140</code> for the user token</li>
+</ul>
+<p>These are precisely the asset names of the admin tokens. The
+references of “name” are the remaining bytes of the asset name.</p>
+<h3 data-number="1.5.5" id="cip-68"><span
+class="header-section-number">1.5.5</span> cip-68</h3>
+<p>Here is a data definition from cip-68</p>
+<pre class="cddl language-cddl"><code>files_details =
+      {
+        ? name : bounded_bytes, ; UTF-8
+        mediaType : bounded_bytes, ; UTF-8
+        src : bounded_bytes ; UTF-8
+        ; ... Additional properties are allowed
+      }
+
+ metadata =
+      {
+        name : bounded_bytes, ; UTF-8
+        image : bounded_bytes, ; UTF-8
+        ? mediaType : bounded_bytes, ; UTF-8
+        ? description : bounded_bytes, ; UTF-8
+        ? files : [* files_details]
+        ; ... Additional properties are allowed
+      }
+
+    ; Custom user defined plutus data.
+    ; Setting data is optional, but the field is required
+    ; and needs to be at least Unit/Void: #6.121([])
+extra = plutus_data
+
+datum = #6.121([metadata, 1, extra]) ; version 1</code></pre>
+<p>The design of the <code>Datum</code> differs from this in two
+ways:</p>
+<ol type="1">
+<li>page is a relaxation of the metadata field. There are no manditory
+fields.</li>
+<li>extra is bytearray of the next name.</li>
+</ol>
+<p>Thus, there is potential for interoperability. For example, if
+program displays the name and image of cip-68 tokens, and a user has set
+these fields, then this tool should display them.</p>
+<h2 data-number="1.6" id="glossary"><span
+class="header-section-number">1.6</span> Glossary</h2>
+<h3 data-number="1.6.1" id="cardano-related"><span
+class="header-section-number">1.6.1</span> Cardano Related</h3>
+<ul>
+<li>Validator
+<ul>
+<li>A Plutus script which contains the logic for what is necessary to
+spend the funds locked at its address, or mint/burn assets of a specific
+PolicyID. For more info see <a
+href="https://plutus.readthedocs.io/en/latest/tutorials/basic-validators.html?highlight=validator">here</a></li>
+</ul></li>
+<li>Redeemer
+<ul>
+<li>Input data provided to a script. For more info see <a
+href="https://plutus.readthedocs.io/en/latest/simple-example.html?highlight=redeemer#the-eutxo-model-datum-redeemer-and-script-context">here</a></li>
+</ul></li>
+</ul> 
+    </main>
+  </body>
+</html>
