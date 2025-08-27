@@ -4,7 +4,7 @@
 
 # Stoa Profiles
 
-Stoa Profiles is a smart contract/decentralized application (dapp) that allows users to create and manage their own unique pages on the Cardano blockchain. Think of it as a personal, on-chain profile that users can update and control. These unique NFTs can serve as a launchpad for diverse applications, including digital identity, real-world assets (RWA), and more.
+Stoa Profiles: a smart contract/decentralized application (dapp) that allows users to create and manage their own unique pages on the Cardano blockchain. Think of it as a personal, on-chain profile that users can update and control. These unique NFTs can serve as a launchpad for diverse applications, including digital identity, real-world assets (RWA), and more.
 
 ---
 
